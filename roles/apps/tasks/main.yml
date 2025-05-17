@@ -31,6 +31,10 @@
             - N8N_BASIC_AUTH_USER=admin
             - N8N_BASIC_AUTH_PASSWORD=admin
             - WEBHOOK_TUNNEL_URL=https://n8n.winzardy.com/
+            - WEBHOOK_URL=https://n8n.winzardy.com/
+            - N8N_HOST=n8n.winzardy.com
+            - N8N_PORT=5678
+            - N8N_PROTOCOL=https
           ports:
             - "5678:5678"
           volumes:
