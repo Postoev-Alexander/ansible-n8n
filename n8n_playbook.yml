@@ -7,9 +7,6 @@
   roles:
     - docker
     - apps
-  #  - nginx
-  #  - mysql
-  #  - php 
   tasks:
   - name: Ping сервер
     ansible.builtin.ping:    
