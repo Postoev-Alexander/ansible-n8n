@@ -1,0 +1,14 @@
+#################
+# LEMP PLAYBOOK #
+#################
+---
+- hosts: "all"
+  become: true 
+  #roles:
+  #  - nginx
+  #  - mysql
+  #  - php 
+  tasks:
+  - name: Ping сервер
+    ansible.builtin.ping:    
+      
