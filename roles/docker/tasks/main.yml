@@ -1,0 +1,28 @@
+---
+- name: Установка зависимостей
+  apt:
+    name: [apt-transport-https, ca-certificates, curl, software-properties-common]
+    state: present
+    update_cache: true
+
+- name: Добавление GPG ключа Docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Добавление Docker репозитория
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Установка Docker
+  apt:
+    name: [docker-ce, docker-ce-cli, containerd.io]
+    state: latest
+    update_cache: true
+
+- name: Установка Docker Compose
+  get_url:
+    url: https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
