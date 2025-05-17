@@ -1,0 +1,42 @@
+---
+- name: Создать директорию для docker-compose
+  file:
+    path: /opt/containers
+    state: directory
+
+- name: Скопировать docker-compose.yml
+  copy:
+    dest: /opt/containers/docker-compose.yml
+    content: |
+      version: '3'
+      services:
+        nginx-proxy-manager:
+          image: jc21/nginx-proxy-manager:latest
+          container_name: nginx-proxy-manager
+          restart: unless-stopped
+          ports:
+            - "80:80"
+            - "81:81"
+            - "443:443"
+          volumes:
+            - ./data/nginx:/data
+            - ./data/letsencrypt:/etc/letsencrypt
+
+        n8n:
+          image: n8nio/n8n
+          container_name: n8n
+          restart: unless-stopped
+          environment:
+            - N8N_BASIC_AUTH_ACTIVE=true
+            - N8N_BASIC_AUTH_USER=admin
+            - N8N_BASIC_AUTH_PASSWORD=admin
+            - WEBHOOK_TUNNEL_URL=https://your.domain.com/
+          ports:
+            - "5678:5678"
+          volumes:
+            - ./data/n8n:/home/node/.n8n
+
+- name: Запуск контейнеров
+  shell: docker-compose up -d
+  args:
+    chdir: /opt/containers
