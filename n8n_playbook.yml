@@ -1,10 +1,11 @@
 #################
-# LEMP PLAYBOOK #
+# n8n PLAYBOOK #
 #################
 ---
 - hosts: "all"
   become: true 
-  #roles:
+  roles:
+    - docker
   #  - nginx
   #  - mysql
   #  - php 
