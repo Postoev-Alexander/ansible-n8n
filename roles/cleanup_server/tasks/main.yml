@@ -5,10 +5,10 @@
     chdir: /opt/containers
   ignore_errors: true
 
-- name: Удалить директорию с docker-compose файлами и данными
-  file:
-    path: /opt/containers
-    state: absent
+#- name: Удалить директорию с docker-compose файлами и данными
+#  file:
+#    path: /opt/containers
+#    state: absent
 
 - name: Удалить образы n8n и nginx-proxy-manager
   docker_image:
