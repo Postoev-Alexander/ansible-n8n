@@ -4,3 +4,4 @@
   roles:
     - role: nginx_proxy_manager
     - role: n8n
+      
