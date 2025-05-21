@@ -1,0 +1,41 @@
+- name: Create wp_net network if not exists
+  docker_network:
+    name: wp_net
+    driver: bridge
+    state: present
+
+- name: Deploy WordPress via Docker Compose
+  community.docker.docker_compose:
+    project_src: /opt/wordpress
+    definition:
+      version: '3.8'
+      services:
+        wordpress:
+          image: wordpress:latest
+          restart: always
+          environment:
+            WORDPRESS_DB_HOST: wp_db
+            WORDPRESS_DB_NAME: wordpress_db
+            WORDPRESS_DB_USER: admin
+            WORDPRESS_DB_PASSWORD: Hvkrd45k
+          volumes:
+            - ./wp-content:/var/www/html/wp-content
+          networks:
+            - wp_net
+          depends_on:
+            - wp_db
+        wp_db:
+          image: mysql:latest
+          restart: always
+          environment:
+            MYSQL_DATABASE: wordpress_db
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: Hvkrd45k
+            MYSQL_ROOT_PASSWORD: Ohfuwblkj34j
+          volumes:
+            - ./wp-db-data:/var/lib/mysql
+          networks:
+            - wp_net
+      networks:
+        wp_net:
+          external: true

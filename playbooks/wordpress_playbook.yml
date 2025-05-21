@@ -1,0 +1,6 @@
+- name: Deploy WordPress with nginx proxy manager
+  hosts: wordpress_server
+  become: true
+  roles:
+    - role: nginx_proxy_manager
+    - role: wordpress

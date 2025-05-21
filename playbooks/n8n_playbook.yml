@@ -1,0 +1,6 @@
+- name: Deploy n8n with nginx proxy manager
+  hosts: n8n_server
+  become: true
+  roles:
+    - role: nginx_proxy_manager
+    - role: n8n

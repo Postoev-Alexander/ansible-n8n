@@ -1,0 +1,4 @@
+npm_email: "admin@example.com"
+npm_user: "admin"
+npm_password: "secure-password"
+npm_api_url: "http://localhost:81"
