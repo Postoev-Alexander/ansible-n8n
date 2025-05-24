@@ -1,0 +1,8 @@
+---
+- hosts: outline_vpn
+  become: yes
+  roles:
+    - docker
+    - outline_install
+    #- outline_backup_restore
+    #- docker_restart
