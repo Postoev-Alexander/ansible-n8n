@@ -9,8 +9,9 @@
   tasks:
     - name: Restart Docker containers
       docker_container:
-        name: "{{ item.name }}"
-        restart: yes
+        name: "{{ item }}"
+        state: started
+        restart: true
       loop:
-        - { name: 'outline-shadowbox' } # Adjust container names if needed
-        - { name: 'outline-metrics' }
+        - shadowbox
+ 
