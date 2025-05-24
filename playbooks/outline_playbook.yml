@@ -4,5 +4,13 @@
   roles:
     - docker
     - outline_install
-    #- outline_backup_restore
+    - outline_backup_restore
     #- docker_restart
+  tasks:
+    - name: Restart Docker containers
+      docker_container:
+        name: "{{ item.name }}"
+        restart: yes
+      loop:
+        - { name: 'outline-shadowbox' } # Adjust container names if needed
+        - { name: 'outline-metrics' }

@@ -1,17 +1,17 @@
 ---
-- name: Create directory for backup
-  file:
-    path: /opt/outline_backup
-    state: directory
-    mode: '0755'
+#- name: Create directory for backup
+#  file:
+#    path: /opt/outline_backup
+#    state: directory
+#    mode: '0755'
 
 #- name: Copy backup archive to server
 #  copy:
 #    src: files/outline_backup.tar.gz  # Place your backup file in roles/outline_backup_restore/files/
 #    dest: /opt/outline_backup/outline_backup.tar.gz
 
-- name: Unarchive backup
-  unarchive:
-    src: /opt/outline_backup/outline_backup.tar.gz
-    dest: /root/  # Adjust the destination path according to your setup
+- name: Unarchive backup ZIP archive
+  ansible.builtin.unarchive:
+    src: /opt/outline_backup/outline_backup.zip
+    dest: /opt/
     remote_src: yes
