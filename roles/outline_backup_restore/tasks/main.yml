@@ -20,3 +20,8 @@
     src: /opt/outline_backup/outline_backup.zip
     dest: /opt/
     remote_src: yes
+
+- name: Перезупускаем Outline с новой конфигурацией
+  ansible.builtin.shell: /opt/outline/persisted-state/start_container.sh
+  args:
+    chdir: /opt/outline/persisted-state/
