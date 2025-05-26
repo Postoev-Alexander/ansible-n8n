@@ -35,6 +35,6 @@
     group: root
 
 - name: Перезапустить Outline с новой конфигурацией
-  ansible.builtin.shell: ./start_container.sh
+  ansible.builtin.shell: bash start_container.sh
   args:
     chdir: /opt/outline/persisted-state/
