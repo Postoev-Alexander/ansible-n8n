@@ -9,19 +9,32 @@
 #  copy:
 #    src: files/outline_backup.tar.gz  # Place your backup file in roles/outline_backup_restore/files/
 #    dest: /opt/outline_backup/outline_backup.tar.gz
+ 
 - name: Установить unzip
   apt:
     name: unzip
     state: present
     update_cache: true
-    
-- name: Unarchive backup ZIP archive
+
+- name: Удалить старый каталог Outline
+  ansible.builtin.file:
+    path: /opt/outline
+    state: absent
+
+- name: Распаковать архив с резервной копией Outline
   ansible.builtin.unarchive:
     src: /opt/outline_backup/outline_backup.zip
     dest: /opt/
     remote_src: yes
 
-- name: Перезупускаем Outline с новой конфигурацией
-  ansible.builtin.shell: bash /opt/outline/persisted-state/start_container.sh
+- name: Сделать start_container.sh исполняемым
+  ansible.builtin.file:
+    path: /opt/outline/persisted-state/start_container.sh
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Перезапустить Outline с новой конфигурацией
+  ansible.builtin.shell: ./start_container.sh
   args:
     chdir: /opt/outline/persisted-state/
