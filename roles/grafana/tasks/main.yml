@@ -1,0 +1,38 @@
+---
+# tasks file for grafana role
+- name: Ensure Docker SDK for Python is available (just in case)
+  ansible.builtin.pip:
+    name: docker
+    state: present
+  become: yes
+
+- name: Create Grafana data directory on host
+  ansible.builtin.file:
+    path: "{{ grafana_data_dir }}"
+    state: directory
+    mode: '0755' # Права доступа могут быть настроены более гранулярно
+  become: yes
+
+- name: Deploy Grafana container
+  community.docker.docker_container:
+    name: "{{ grafana_container_name }}"
+    image: "{{ grafana_image_name }}:{{ grafana_image_tag }}"
+    restart_policy: "{{ grafana_restart_policy }}"
+    ports:
+      - "{{ grafana_host_port }}:3000"
+    volumes:
+      - "{{ grafana_data_dir }}:/var/lib/grafana"
+    env:
+      GF_SECURITY_ADMIN_USER: "{{ grafana_admin_user }}"
+      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_password }}"
+      GF_SERVER_ROOT_URL: "{{ grafana_root_url | default(omit) }}" # Для корректных URL в Grafana
+      GF_INSTALL_PLUGINS: "{{ grafana_plugins | default(omit) }}" # Для установки плагинов
+    labels: "{{ grafana_container_labels | default({}) }}" # Для добавления меток к контейнеру
+  become: yes
+  notify: Restart Grafana container # Пример обработчика, если нужен
+
+- name: Ensure Grafana container is started
+  community.docker.docker_container:
+    name: "{{ grafana_container_name }}"
+    state: started # Просто убеждаемся, что он запущен, если уже существовал
+  become: yes
