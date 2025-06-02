@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+{% for job in prometheus_scrape_configs %}
+  - job_name: '{{ job.job_name }}'
+    static_configs:
+      - targets: {{ job.static_configs[0].targets | to_nice_yaml(indent=8) }}
+{% endfor %}
