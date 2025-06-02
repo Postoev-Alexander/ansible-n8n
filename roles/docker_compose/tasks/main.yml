@@ -1,0 +1,49 @@
+---
+# tasks file for docker role
+- name: Install prerequisite packages for Docker (Debian/Ubuntu)
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg # Добавлено для более современных систем
+      - lsb-release # Добавлено для определения версии дистрибутива
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Add Docker GPG key (Debian/Ubuntu)
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Add Docker repository (Debian/Ubuntu)
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Install Docker Engine (Debian/Ubuntu)
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin 
+      - docker-compose-plugin 
+    state: present 
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+  notify: Start and Enable Docker # Добавим обработчик
+
+- name: Ensure Docker service is started and enabled
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Install Docker SDK for Python (required for Docker Ansible modules)
+  ansible.builtin.pip: # Убедитесь, что pip установлен на целевой машине
+    name: docker
+    state: present

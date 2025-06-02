@@ -10,7 +10,7 @@
     # grafana_plugins: "grafana-worldmap-panel" # Пример переопределения плагинов
 
   roles:
-    - role: docker  # Имя вашей роли для установки Docker
+    - role: docker_compose  # Имя вашей роли для установки Docker
     - role: grafana # Имя вашей роли для развертывания Grafana
 
   # Можно добавить post_tasks, если нужно выполнить что-то после обеих ролей
