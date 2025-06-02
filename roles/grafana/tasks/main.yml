@@ -29,7 +29,7 @@
       GF_INSTALL_PLUGINS: "{{ grafana_plugins | default(omit) }}" # Для установки плагинов
     labels: "{{ grafana_container_labels | default({}) }}" # Для добавления меток к контейнеру
   become: yes
-  notify: Restart Grafana container # Пример обработчика, если нужен
+  #notify: Restart Grafana container # Пример обработчика, если нужен
 
 - name: Ensure Grafana container is started
   community.docker.docker_container:
