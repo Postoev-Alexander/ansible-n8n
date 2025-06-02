@@ -12,6 +12,6 @@ grafana_admin_password: "Grafana" # !!! ОБЯЗАТЕЛЬНО ИЗМЕНИТЕ 
 
 grafana_root_url: "http://{{ ansible_default_ipv4.address | default(ansible_host) }}:{{ grafana_host_port }}" # По умолчанию
 grafana_plugins: "" # Пример: "grafana-clock-panel,grafana-simple-json-datasource"
-grafana_container_labels: # Метки для контейнера, например, для Traefik
+grafana_container_labels: {}# Метки для контейнера, например, для Traefik
 # traefik.enable: "true"
 # traefik.http.routers.grafana.rule: "Host(`grafana.example.com`)"
