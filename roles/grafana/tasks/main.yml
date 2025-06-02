@@ -12,6 +12,11 @@
     state: directory
     mode: '0755' # Права доступа могут быть настроены более гранулярно
   become: yes
+  
+# Выдаём права UID 472 (Grafana внутри контейнера)
+- name: Set correct ownership for Grafana data directory (UID 472)
+  ansible.builtin.command: chown -R 472:472 {{ grafana_data_dir }}
+  become: yes
 
 - name: Deploy Grafana container
   community.docker.docker_container:
