@@ -2,6 +2,10 @@
 - name: Развернуть Prometheus и Node Exporter
   hosts: node_exporter_vps # Замените на вашу группу хостов, например, 'monitoring_servers' или 'ubuntu_servers'
   become: yes # Для выполнения задач, требующих повышенных привилегий
+  gather_facts: yes # собираем факты о сервисах
+  ansible_facts_modules:
+    - service_facts
+  
   roles:
     #- role: prometheus # Роль Prometheus (если нужна на этом же сервере)
     - role: node_exporter # Роль Node Exporter
