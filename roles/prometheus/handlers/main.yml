@@ -3,5 +3,6 @@
 - name: Перезапустить контейнер Prometheus
   community.docker.docker_container:
     name: "{{ prometheus_container_name }}"
-    state: restarted
+    state: started
+    restart: true
   become: yes
