@@ -1,6 +1,6 @@
 ---
 - name: Развернуть Prometheus и Node Exporter
-  hosts: node_exporter_vps # Замените на вашу группу хостов, например, 'monitoring_servers' или 'ubuntu_servers'
+  hosts: all_node_exporter # Замените на вашу группу хостов, например, 'monitoring_servers' или 'ubuntu_servers'
   become: yes # Для выполнения задач, требующих повышенных привилегий
   gather_facts: yes # собираем факты о сервисах
   gather_subset:
