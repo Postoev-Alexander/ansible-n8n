@@ -1,0 +1,7 @@
+---
+# Файл обработчиков для роли prometheus
+- name: Перезапустить контейнер Prometheus
+  community.docker.docker_container:
+    name: "{{ prometheus_container_name }}"
+    state: restarted
+  become: yes
