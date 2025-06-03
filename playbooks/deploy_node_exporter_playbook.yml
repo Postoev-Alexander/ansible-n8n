@@ -5,7 +5,6 @@
   gather_facts: yes # собираем факты о сервисах
   gather_subset:
     - all # Включает стандартные факты
-    - service_facts # Явно включает факты о сервисах
   
   roles:
     #- role: prometheus # Роль Prometheus (если нужна на этом же сервере)
