@@ -12,7 +12,6 @@
   roles:
     - role: docker_compose  # Имя вашей роли для установки Docker
     - role: grafana # Имя вашей роли для развертывания Grafana
-    - role: prometheus
 
   # Можно добавить post_tasks, если нужно выполнить что-то после обеих ролей
   # post_tasks:

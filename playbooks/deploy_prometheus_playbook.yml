@@ -1,0 +1,19 @@
+---
+- name: Развернуть Prometheus с помощью Docker
+  hosts: your_target_host # Замените на имя вашей целевой группы или хоста
+  become: yes
+  roles:
+    - role: docker_compose
+    - role: prometheus
+  vars:
+    # Здесь можно переопределить переменные по умолчанию
+    # prometheus_host_port: "9090"
+
+    # Ваши цели для сбора метрик
+    prometheus_scrape_targets:
+      - job_name: 'prometheus'
+        targets: ['localhost:9090']
+     # - job_name: 'node_exporter'
+     #   targets: ['localhost:9100'] # Пример: добавить Node Exporter
+     # - job_name: 'my_app'
+     #   targets: ['192.168.1.50:8080'] # Пример: добавить свое приложение

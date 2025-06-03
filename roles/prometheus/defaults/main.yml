@@ -1,23 +1,14 @@
+---
+# Файл значений по умолчанию для роли prometheus
 prometheus_container_name: prometheus
 prometheus_image_name: prom/prometheus
 prometheus_image_tag: latest
 prometheus_restart_policy: unless-stopped
 prometheus_host_port: "9090"
+prometheus_config_dir: /etc/prometheus_config # Директория для конфигурации на хосте
+prometheus_data_dir: /var/lib/prometheus      # Директория для данных на хосте
 
-prometheus_data_dir: /var/lib/prometheus-data
-prometheus_config_dir: /etc/prometheus-config
-
-# Переменные для шаблона конфигурации
-prometheus_scrape_configs:
+# Базовая конфигурация Prometheus
+prometheus_scrape_targets:
   - job_name: 'prometheus'
-    static_configs:
-      - targets: ['localhost:9090']
-
-prometheus_container_env: {}
-# Пример:
-#   SOME_ENV_VAR: "value"
-
-prometheus_container_labels: {}
-# Пример для Traefik:
-# traefik.enable: "true"
-# traefik.http.routers.prometheus.rule: "Host(`prometheus.example.com`)"
+    targets: ['localhost:9090']

@@ -1,36 +1,27 @@
-- name: Ensure Docker SDK for Python is available (just in case)
+---
+# Файл задач для роли prometheus
+- name: Установить Docker SDK для Python
   ansible.builtin.pip:
     name: docker
     state: present
   become: yes
 
-- name: Create Prometheus data directory on host
-  ansible.builtin.file:
-    path: "{{ prometheus_data_dir }}"
-    state: directory
-    mode: '0755'
-  become: yes
-
-# UID 65534 (nobody) часто используется Prometheus в контейнере, но проверьте свой образ!
-- name: Set correct ownership for Prometheus data directory (UID 65534)
-  ansible.builtin.command: chown -R 65534:65534 {{ prometheus_data_dir }}
-  become: yes
-
-- name: Create Prometheus config directory on host
+- name: Создать директорию для конфигурации Prometheus
   ansible.builtin.file:
     path: "{{ prometheus_config_dir }}"
     state: directory
     mode: '0755'
   become: yes
 
-- name: Deploy Prometheus config file
+- name: Скопировать файл конфигурации Prometheus
   ansible.builtin.template:
     src: prometheus.yml.j2
     dest: "{{ prometheus_config_dir }}/prometheus.yml"
     mode: '0644'
   become: yes
+  notify: Перезапустить контейнер Prometheus
 
-- name: Deploy Prometheus container
+- name: Развернуть контейнер Prometheus
   community.docker.docker_container:
     name: "{{ prometheus_container_name }}"
     image: "{{ prometheus_image_name }}:{{ prometheus_image_tag }}"
@@ -38,17 +29,12 @@
     ports:
       - "{{ prometheus_host_port }}:9090"
     volumes:
-      - "{{ prometheus_data_dir }}:/prometheus"
-      - "{{ prometheus_config_dir }}/prometheus.yml:/etc/prometheus/prometheus.yml"
-    command: >
-      --config.file=/etc/prometheus/prometheus.yml
-      --storage.tsdb.path=/prometheus
-      --web.enable-lifecycle
-    env: "{{ prometheus_container_env | default({}) }}"
-    labels: "{{ prometheus_container_labels | default({}) }}"
+      - "{{ prometheus_config_dir }}/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+      - "{{ prometheus_data_dir }}:/prometheus" # Директория для данных Prometheus
   become: yes
+  notify: Перезапустить контейнер Prometheus
 
-- name: Ensure Prometheus container is started
+- name: Убедиться, что контейнер Prometheus запущен
   community.docker.docker_container:
     name: "{{ prometheus_container_name }}"
     state: started
