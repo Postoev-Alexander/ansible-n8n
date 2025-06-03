@@ -15,5 +15,5 @@
         targets: ['localhost:9090']
       - job_name: 'node_exporter'
         targets: ['5.129.206.119:9100'] # Пример: добавить Node Exporter
-     # - job_name: 'my_app'
-     #   targets: ['192.168.1.50:8080'] # Пример: добавить свое приложение
+      - job_name: 'aws_vps'
+        targets: ['56.228.57.131:9100'] # Пример: добавить свое приложение

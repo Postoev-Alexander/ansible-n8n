@@ -77,11 +77,11 @@
   become: yes
 
 # Опционально: Открыть порт в файрволе (если у вас UFW или firewalld)
-- name: Открыть порт Node Exporter в UFW (если UFW активен)
-  community.general.ufw:
-    rule: allow
-    port: "{{ node_exporter_port }}"
-    proto: tcp
-    comment: "Allow Node Exporter traffic"
-  become: yes
-  when: ansible_facts['service_facts']['ufw']['state'] == 'running' # Проверяем, запущен ли UFW
+#- name: Открыть порт Node Exporter в UFW (если UFW активен)
+#  community.general.ufw:
+#    rule: allow
+#    port: "{{ node_exporter_port }}"
+#    proto: tcp
+#    comment: "Allow Node Exporter traffic"
+#  become: yes
+#  when: ansible_facts['service_facts']['ufw']['state'] == 'running' # Проверяем, запущен ли UFW
