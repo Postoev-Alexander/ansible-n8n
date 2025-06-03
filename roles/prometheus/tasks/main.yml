@@ -11,6 +11,20 @@
     path: "{{ prometheus_config_dir }}"
     state: directory
     mode: '0755'
+    owner: root # Обычно конфигурационные файлы принадлежат root
+    group: root
+  become: yes
+
+- name: Создать директорию для данных Prometheus и установить права для пользователя Prometheus
+  ansible.builtin.file:
+    path: "{{ prometheus_data_dir }}"
+    state: directory
+    mode: '0775' # Устанавливаем права на запись для владельца и группы, и чтение для остальных
+    owner: 65534 # UID пользователя 'nobody' или 'prometheus' в контейнере Prometheus
+    group: 65534 # GID пользователя 'nobody' или 'prometheus' в контейнере Prometheus
+    # Если вы точно знаете, что Prometheus внутри контейнера использует другого пользователя,
+    # измените owner/group на соответствующий UID/GID.
+    # Для стандартного образа prom/prometheus, UID 65534 (nobody) часто используется.
   become: yes
 
 - name: Скопировать файл конфигурации Prometheus
@@ -18,6 +32,8 @@
     src: prometheus.yml.j2
     dest: "{{ prometheus_config_dir }}/prometheus.yml"
     mode: '0644'
+    owner: root
+    group: root
   become: yes
   notify: Перезапустить контейнер Prometheus
 
