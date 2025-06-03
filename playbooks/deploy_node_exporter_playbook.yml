@@ -1,0 +1,17 @@
+---
+- name: Развернуть Prometheus и Node Exporter
+  hosts: node_exporter_vps # Замените на вашу группу хостов, например, 'monitoring_servers' или 'ubuntu_servers'
+  become: yes # Для выполнения задач, требующих повышенных привилегий
+  roles:
+    #- role: prometheus # Роль Prometheus (если нужна на этом же сервере)
+    - role: node_exporter # Роль Node Exporter
+  vars:
+  # Пример переменных для Prometheus (если он развертывается на этих же узлах)
+  # prometheus_scrape_targets:
+  #   - job_name: 'localhost_metrics'
+  #     targets: ['localhost:9100'] # Prometheus будет скрапить сам себя и Node Exporter на этом же хосте
+  
+  # Переменные для Node Exporter (если нужно переопределить defaults)
+  # node_exporter_version: "1.8.1"
+  # node_exporter_port: 9100
+  # node_exporter_extra_args: "--no-collector.wifi"
