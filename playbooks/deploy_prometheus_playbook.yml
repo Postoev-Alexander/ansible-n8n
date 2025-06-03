@@ -1,6 +1,6 @@
 ---
 - name: Развернуть Prometheus с помощью Docker
-  hosts: your_target_host # Замените на имя вашей целевой группы или хоста
+  hosts: prometheus_vps # Замените на имя вашей целевой группы или хоста
   become: yes
   roles:
     - role: docker_compose
