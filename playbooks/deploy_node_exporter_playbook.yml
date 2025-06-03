@@ -3,8 +3,9 @@
   hosts: node_exporter_vps # Замените на вашу группу хостов, например, 'monitoring_servers' или 'ubuntu_servers'
   become: yes # Для выполнения задач, требующих повышенных привилегий
   gather_facts: yes # собираем факты о сервисах
-  ansible_facts_modules:
-    - service_facts
+  gather_subset:
+    - default # Включает стандартные факты
+    - service_facts # Явно включает факты о сервисах
   
   roles:
     #- role: prometheus # Роль Prometheus (если нужна на этом же сервере)
