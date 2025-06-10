@@ -13,7 +13,7 @@
     prometheus_scrape_targets:
       - job_name: 'prometheus'
         targets: ['localhost:9090']
-      - job_name: 'node_exporter'
-        targets: ['5.129.206.119:9100'] # Пример: добавить Node Exporter
+      - job_name: 'node_exporter 2'
+        targets: ['92.51.23.6:9100'] # Пример: добавить Node Exporter
       - job_name: 'aws_vps'
         targets: ['56.228.57.131:9100'] # Пример: добавить свое приложение
