@@ -1,0 +1,6 @@
+---
+- name: Резервное копирование серверов
+  hosts: srv_n8n # Или укажите конкретную группу из inventory
+  become: yes
+  roles:
+    - backup_n8n
