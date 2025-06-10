@@ -1,5 +1,5 @@
 ---
-- name: Развернуть Prometheus и Node Exporter
+- name: Развернуть Node Exporter сервере котрый будет передавать свою статистику в prometheus
   hosts: all_node_exporter # Замените на вашу группу хостов, например, 'monitoring_servers' или 'ubuntu_servers'
   become: yes # Для выполнения задач, требующих повышенных привилегий
   gather_facts: yes # собираем факты о сервисах

@@ -1,0 +1,24 @@
+---
+- name: Установить пакет rclone
+  package:
+    name: rclone
+    state: present
+  become: yes
+
+- name: Создать директорию для конфигурации rclone
+  file:
+    path: "{{ ansible_env.HOME }}/.config/rclone"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: '0700'
+  become: no # Создаем в домашней директории пользователя, от которого запускаются задачи
+
+- name: Развернуть конфигурационный файл rclone из Vault
+  template:
+    src: rclone.conf.j2
+    dest: "{{ ansible_env.HOME }}/.config/rclone/rclone.conf"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: '0600'
+  become: no
