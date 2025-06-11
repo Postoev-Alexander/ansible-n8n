@@ -23,7 +23,7 @@
 - name: Распаковать архив с данными
   unarchive:
     src: "/tmp/{{ backup_file_name }}"
-    dest: /opt/containers/data/
+    dest: /opt/containers/
     remote_src: yes
     #extra_opts: [--strip-components=1] # Может потребоваться для удаления корневой папки из архива
 
