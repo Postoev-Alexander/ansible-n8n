@@ -17,7 +17,7 @@
     - /opt/containers/docker-compose.yml
 
 - name: Скачать указанный бекап с Google Drive
-  shell: "rclone copy 'gdrive03:backup_test/5.129.204.178/{{ backup_file_name }}' /tmp/"
+  shell: "rclone copy 'gdrive03:backup_test/srv_test/{{ backup_file_name }}' /tmp/"
   args:
     executable: /bin/bash
 
