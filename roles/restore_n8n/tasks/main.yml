@@ -1,7 +1,7 @@
 ---
 # Востановление из backup с Google Drive
 - name: Остановить Docker-контейнеры перед восстановлением
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: /opt/containers
     state: absent
   ignore_errors: yes
