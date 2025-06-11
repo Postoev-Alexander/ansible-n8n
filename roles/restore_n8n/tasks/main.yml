@@ -27,7 +27,16 @@
     remote_src: yes
     #extra_opts: [--strip-components=1] # Может потребоваться для удаления корневой папки из архива
 
+  # Востанавливаем права для пользователя 
+- name: Установить права для каталога n8n
+  file:
+    path: /opt/containers/data/n8n
+    state: directory
+    recurse: yes
+    owner: 1000
+    group: 1000
+
 - name: Запустить Docker-контейнеры
   community.docker.docker_compose_v2:
     project_src: /opt/containers
-    state: started
+    state: present

@@ -4,13 +4,4 @@
   become: yes
   roles:
     - restore_n8n
-  # Востанавливаем права для пользователя 
-  tasks:
-    - name: Установить права для каталога n8n
-      file:
-        path: /opt/containers/data/n8n
-        state: directory
-        recurse: yes
-        owner: 1000
-        group: 1000
   
