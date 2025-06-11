@@ -14,7 +14,6 @@
     - /opt/containers/data/nginx
     - /opt/containers/data/letsencrypt
     - /opt/containers/data/n8n
-    - /opt/containers/docker-compose.yml
 
 - name: Скачать указанный бекап с Google Drive
   shell: "rclone copy 'gdrive03:backup_test/srv_test/{{ backup_file_name }}' /tmp/"
