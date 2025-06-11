@@ -1,6 +1,6 @@
 ---
 - name: Востановление из резервной копии сервера
-  hosts: srv_n8n # Или укажите конкретную группу из inventory
+  hosts: n8n_vps # Или укажите конкретную группу из inventory
   become: yes
   roles:
     - restore_n8n
