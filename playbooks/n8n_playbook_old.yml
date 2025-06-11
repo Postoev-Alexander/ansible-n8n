@@ -3,7 +3,7 @@
 #################
 ---
 - hosts: "n8n_vps"
-  become: yes 
+  become: yes
   roles:
     - docker_compose
     - apps
