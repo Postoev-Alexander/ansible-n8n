@@ -1,5 +1,6 @@
-- name: Резервное копирование серверов
+---
+- name: Востановление из резервной копии сервера
   hosts: outline_vpn # Или укажите конкретную группу из inventory
   become: yes
   roles:
-    - backup_outlinevpn
+    - restore_outlinevpn

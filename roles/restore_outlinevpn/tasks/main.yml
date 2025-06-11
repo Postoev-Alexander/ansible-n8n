@@ -1,0 +1,29 @@
+---
+# Востановление из backup с Google Drive
+- name: Удалить старый каталог Outline
+  ansible.builtin.file:
+    path: /opt/outline
+    state: absent
+    
+- name: Скачать указанный бекап с Google Drive
+  shell: "rclone copy 'gdrive03:backup_test/srv_outline/{{ backup_file_name }}' /tmp/"
+  args:
+    executable: /bin/bash
+
+- name: Распаковать архив с данными
+  unarchive:
+    src: "/tmp/{{ backup_file_name }}"
+    dest: /opt/
+    remote_src: yes  
+
+- name: Сделать start_container.sh исполняемым
+  ansible.builtin.file:
+    path: /opt/outline/persisted-state/start_container.sh
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Перезапустить Outline с новой конфигурацией
+  ansible.builtin.shell: bash start_container.sh
+  args:
+    chdir: /opt/outline/persisted-state/
