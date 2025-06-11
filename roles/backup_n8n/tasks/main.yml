@@ -5,6 +5,7 @@
       - /opt/containers/data/nginx
       - /opt/containers/data/letsencrypt
       - /opt/containers/data/n8n
+      - /opt/containers/docker-compose.yml
     dest: "/tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.tar.gz"
     format: gz
     owner: root
@@ -16,7 +17,7 @@
   args:
     executable: /bin/bash
 
-#- name: Удалить локальный архив после загрузки
-#  file:
-#    path: "/tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.tar.gz"
-#    state: absent
+- name: Удалить локальный архив после загрузки
+  file:
+    path: "/tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.tar.gz"
+    state: absent
