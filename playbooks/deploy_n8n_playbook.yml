@@ -2,6 +2,7 @@
   hosts: n8n_server
   become: true
   roles:
+    - role: docker_compose
     - role: nginx_proxy_manager
     - role: n8n
       

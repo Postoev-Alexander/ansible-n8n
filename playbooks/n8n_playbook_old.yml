@@ -2,10 +2,10 @@
 # n8n PLAYBOOK #
 #################
 ---
-- hosts: "all"
-  become: true 
+- hosts: "n8n_vps"
+  become: yes 
   roles:
-    - docker
+    - docker_compose
     - apps
   tasks:
   - name: Ping сервер
