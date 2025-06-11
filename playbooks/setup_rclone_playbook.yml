@@ -1,6 +1,6 @@
 ---
 - name: Установка и настройка rclone на серверах
-  hosts: all # Или укажите группу, например [webservers]
+  hosts: rclone_setup # укажите группу, например [webservers]
   gather_facts: yes # Факты нужны для переменных ansible_env.HOME и ansible_user_id
 
   roles:

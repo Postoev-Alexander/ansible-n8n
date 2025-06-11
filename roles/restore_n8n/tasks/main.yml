@@ -1,5 +1,5 @@
 ---
-# Востановление из backup с Gdrive
+# Востановление из backup с Google Drive
 - name: Остановить Docker-контейнеры перед восстановлением
   community.docker.docker_compose:
     project_src: /opt/containers
