@@ -31,5 +31,4 @@
 - name: Запустить Docker-контейнеры
   community.docker.docker_compose_v2:
     project_src: /opt/containers
-    state: present
-    restarted: yes
+    state: restarted
