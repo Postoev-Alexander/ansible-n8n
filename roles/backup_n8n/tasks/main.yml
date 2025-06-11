@@ -13,11 +13,11 @@
     mode: '0600'
 
 - name: Загрузить резервную копию на Google Drive через rclone
-  shell: "rclone copy /tmp/backup-{{ inventory_hostname }}-*.tar.gz gdrive03:backup_test/srv_test/"
+  shell: "rclone copy /tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.tar.gz gdrive03:backup_test/srv_test/"
   args:
     executable: /bin/bash
 
 - name: Удалить локальный архив после загрузки
   file:
-    path: "/tmp/backup-{{ inventory_hostname }}-*.tar.gz"
+    path: "/tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.tar.gz"
     state: absent
