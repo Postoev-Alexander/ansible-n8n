@@ -1,0 +1,20 @@
+---
+- name: Создать архив данных
+  community.general.archive:
+    path:
+      - /opt/outline
+    dest: "/tmp/backup_outlinvpn-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 | regex_replace(':', '_') }}.tar.gz"
+    format: gz
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Загрузить резервную копию на Google Drive через rclone
+  shell: "rclone copy /tmp/backup_outlinvpn-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 | regex_replace(':', '_') }}.tar.gz gdrive03:backup_test/srv_outline/"
+  args:
+    executable: /bin/bash
+
+- name: Удалить локальный архив после загрузки
+  file:
+    path: "/tmp/backup_outlinvpn-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 | regex_replace(':', '_') }}.tar.gz"
+    state: absent
