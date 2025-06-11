@@ -1,0 +1,5 @@
+- name: Резервное копирование серверов
+  hosts: n8n_vps # Или укажите конкретную группу из inventory
+  become: yes
+  roles:
+    - backup_outlinevpn
