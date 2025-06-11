@@ -6,18 +6,18 @@
       - /opt/containers/data/letsencrypt
       - /opt/containers/data/n8n
       - /opt/containers/docker-compose.yml
-    dest: "/tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.tar.gz"
+    dest: "/tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 | regex_replace(':', '_') }}.tar.gz"
     format: gz
     owner: root
     group: root
     mode: '0600'
 
 - name: Загрузить резервную копию на Google Drive через rclone
-  shell: "rclone copy /tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.tar.gz gdrive03:backup_test/srv_test/"
+  shell: "rclone copy /tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 | regex_replace(':', '_') }}.tar.gz gdrive03:backup_test/srv_test/"
   args:
     executable: /bin/bash
 
 - name: Удалить локальный архив после загрузки
   file:
-    path: "/tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 }}.tar.gz"
+    path: "/tmp/backup-{{ inventory_hostname }}-{{ ansible_date_time.iso8601 | regex_replace(':', '_') }}.tar.gz"
     state: absent
