@@ -1,5 +1,5 @@
 ---
-- hosts: ""odoo_vps"
+- hosts: "odoo_vps"
   become: true
   roles:
     - docker_compose
