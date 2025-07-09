@@ -5,10 +5,9 @@ services:
       POSTGRES_DB: {{ odoo_db_name }}
       POSTGRES_USER: {{ odoo_db_user }}
       POSTGRES_PASSWORD: {{ odoo_db_password }}
-    ports:
-      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    restart: always
 
   odoo:
     image: odoo:{{ odoo_version }}
@@ -17,11 +16,13 @@ services:
     ports:
       - "{{ odoo_port }}:8069"
     environment:
-      - HOST=db
-      - USER={{ odoo_db_user }}
-      - PASSWORD={{ odoo_db_password }}
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER={{ odoo_db_user }}
+      - DB_PASSWORD={{ odoo_db_password }}
     volumes:
       - odoo_data:/var/lib/odoo
+    restart: always
 
 volumes:
   db_data:
