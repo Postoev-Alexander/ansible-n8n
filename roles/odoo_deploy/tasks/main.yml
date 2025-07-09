@@ -12,6 +12,6 @@
     dest: /opt/odoo/docker-compose.yml
 
 - name: Start Odoo containers
-  command: docker-compose up -d
+  command: docker compose up -d
   args:
     chdir: /opt/odoo
