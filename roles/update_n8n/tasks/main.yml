@@ -1,0 +1,10 @@
+---
+- name: Обновить образ n8n
+  ansible.builtin.shell: docker pull n8nio/n8n:latest
+  args:
+    chdir: /opt/containers 
+
+- name: Перезапустить контейнеры
+  ansible.builtin.shell: docker compose up -d
+  args:
+    chdir: /opt/containers
