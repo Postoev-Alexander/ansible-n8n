@@ -1,0 +1,7 @@
+---
+backup_path: "/opt/odoo/backups"
+backup_hour: "3"
+backup_minute: "0"
+postgres_container: "odoo-db-1"
+postgres_user: "odoo"
+postgres_db: "postgres"
