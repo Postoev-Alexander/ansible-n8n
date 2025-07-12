@@ -9,7 +9,7 @@
 - name: Deploy Traefik Docker Compose stack
   community.docker.docker_compose_v2:
     project_name: traefik
-    definition: "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') }}"
+    definition: "{{ lookup('template', 'docker-compose.yml.j2') | from_yaml }}"
     state: present
     build: false # Не нужно, так как используем готовый образ
   tags:
