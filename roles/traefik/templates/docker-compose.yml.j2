@@ -33,7 +33,7 @@ services:
       - "80:80"
       - "443:443"
 {% if traefik_enable_dashboard_access %}
-      - "{{ traefik_dashboard_port }}:{{ traefik_dashboard_port }}"
+      - "{{ traefik_dashboard_port }}:{{ traefik_dashboard_port_in }}"
 {% endif %}
     volumes:
       - "{{ traefik_volume_name }}:/letsencrypt"
