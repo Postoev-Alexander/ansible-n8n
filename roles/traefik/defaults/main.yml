@@ -6,4 +6,4 @@ traefik_enable_dashboard_access: true # Если true, откроет порт �
 traefik_dashboard_port: 8080 # Порт для дашборда Traefik
 
 # !!! Эти переменные должны быть переопределены в group_vars или vault
-# traefik_ssl_email: "your-email@example.com"
+# traefik_ssl_email: "your-email@example.com" 
