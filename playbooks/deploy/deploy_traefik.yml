@@ -1,0 +1,9 @@
+---
+- name: Deploy or update Traefik proxy
+  hosts: all_docker_hosts # Или конкретная группа, где должен стоять Traefik
+  become: yes
+  roles:
+    - traefik
+  tags:
+    - traefik
+    - deploy

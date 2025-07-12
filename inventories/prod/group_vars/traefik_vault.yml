@@ -1,0 +1,3 @@
+---
+# Email для Let's Encrypt - это секрет, так как он используется для уведомлений
+traefik_ssl_email: "alexandr.postoev@winzardy.com"

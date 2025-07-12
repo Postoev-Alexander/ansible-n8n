@@ -1,0 +1,15 @@
+---
+- name: Ensure common Docker network for Traefik exists
+  community.docker.docker_network:
+    name: "{{ traefik_docker_network_name }}"
+    state: present
+  register: docker_network_result
+  tags:
+    - docker_network
+
+- name: Debug Docker network creation result
+  ansible.builtin.debug:
+    var: docker_network_result
+  when: docker_network_result is changed or docker_network_result is success
+  tags:
+    - docker_network
