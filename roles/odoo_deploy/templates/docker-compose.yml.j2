@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres:15
+    container_name: odoo_db
     environment:
       POSTGRES_DB: {{ odoo_db_name }}
       POSTGRES_USER: {{ odoo_db_user }}
@@ -8,13 +9,37 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     restart: always
+    networks:
+      - {{ traefik_docker_network_name }} # Подключаем БД к общей сети
 
   odoo:
     image: odoo:{{ odoo_version }}
+    container_name: odoo_app
     depends_on:
       - db
+    # --- Удаляем прямое проброс портов, Traefik сделает это за нас ---
     ports:
       - "{{ odoo_port }}:8069"
+    # --- Начало меток Traefik для Odoo ---
+    labels:
+      - "traefik.enable=true" # Включаем обнаружение Traefik для этого сервиса
+      # Правило маршрутизации: трафик на odoo.вашдомен.com будет идти к Odoo
+      - "traefik.http.routers.odoo.rule=Host(`{{ odoo_subdomain }}.{{ main_domain }}`)"
+      - "traefik.http.routers.odoo.entrypoints=web,websecure" # Разрешаем доступ через HTTP и HTTPS
+      - "traefik.http.routers.odoo.tls=true" # Включаем HTTPS
+      - "traefik.http.routers.odoo.tls.certresolver=mytlschallenge" # Используем резолвер сертификатов Traefik
+      - "traefik.http.services.odoo.loadbalancer.server.port=8069" # Указываем внутренний порт контейнера Odoo
+      # Дополнительные заголовки безопасности (рекомендуется)
+      - "traefik.http.middlewares.odoo-headers.headers.SSLRedirect=true"
+      - "traefik.http.middlewares.odoo-headers.headers.STSSeconds=315360000"
+      - "traefik.http.middlewares.odoo-headers.headers.browserXSSFilter=true"
+      - "traefik.http.middlewares.odoo-headers.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.odoo-headers.headers.forceSTSHeader=true"
+      - "traefik.http.middlewares.odoo-headers.headers.SSLHost={{ main_domain }}"
+      - "traefik.http.middlewares.odoo-headers.headers.STSIncludeSubdomains=true"
+      - "traefik.http.middlewares.odoo-headers.headers.STSPreload=true"
+      - "traefik.http.routers.odoo.middlewares=odoo-headers@docker" # Применяем эти middleware
+    # --- Конец меток Traefik ---
     environment:
       - DB_HOST=db
       - DB_PORT=5432
@@ -23,7 +48,13 @@ services:
     volumes:
       - odoo_data:/var/lib/odoo
     restart: always
+    networks:
+      - {{ traefik_docker_network_name }} # Подключаем Odoo к общей сети
 
 volumes:
   db_data:
   odoo_data:
+
+networks:
+  {{ traefik_docker_network_name }}:
+    external: true # Важно: эта сеть создается отдельной ролью docker_network
