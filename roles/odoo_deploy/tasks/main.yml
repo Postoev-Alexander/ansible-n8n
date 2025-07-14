@@ -10,14 +10,15 @@
     src: docker-compose.yml.j2 
     dest: /opt/odoo/docker-compose.yml
 
-- name: Start Odoo containers
-  community.docker.docker_compose_v2: # Используйте docker_compose_v2 для Docker Compose v2+
+# --- Рекомендованная задача, заменяющая две последние ---
+- name: Deploy Odoo containers (Simplified)
+  community.docker.docker_compose_v2:
     project_name: odoo
-    definition: "{{ lookup('ansible.builtin.file', '/opt/odoo/docker-compose.yml') }}"
+    definition: "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') }}"
+    project_dir: /opt/odoo # <-- Используйте project_dir вместо args.chdir
     state: present
-    # rebuild: yes # Используйте, если хотите принудительно пересобрать или обновить
-  args:
-    chdir: /opt/odoo
+    # removed_orphans: yes # <-- Очень полезная опция
+    # build: no # Если не собираете образ локально
     
 #- name: Start Odoo containers
 #  command: docker compose up -d
