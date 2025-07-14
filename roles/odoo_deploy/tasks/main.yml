@@ -1,17 +1,25 @@
 ---
-
 - name: Create Odoo project directory
-  file:
+  ansible.builtin.file:
     path: /opt/odoo
     state: directory
     mode: '0755'
 
 - name: Copy docker-compose.yml
-  template:
-    src: docker-compose.yml.j2
+  ansible.builtin.template:
+    src: docker-compose.yml.j2 
     dest: /opt/odoo/docker-compose.yml
 
 - name: Start Odoo containers
-  command: docker compose up -d
+  community.docker.docker_compose_v2: # Используйте docker_compose_v2 для Docker Compose v2+
+    project_name: odoo
+    definition: "{{ lookup('ansible.builtin.file', '/opt/odoo/docker-compose.yml') }}"
+    state: present
+    # rebuild: yes # Используйте, если хотите принудительно пересобрать или обновить
   args:
     chdir: /opt/odoo
+    
+#- name: Start Odoo containers
+#  command: docker compose up -d
+#  args:
+#    chdir: /opt/odoo
