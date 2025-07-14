@@ -9,14 +9,19 @@
   ansible.builtin.template:
     src: docker-compose.yml.j2 
     dest: /opt/odoo/docker-compose.yml
-
+    
+- name: Debug generated Odoo Docker Compose definition
+  ansible.builtin.debug:
+    msg: "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') }}"
+  # tags: always # Добавьте это, чтобы запускать только эту задачу для отладки
+  
 # --- Рекомендованная задача, заменяющая две последние ---
 - name: Deploy Odoo containers (Simplified)
   community.docker.docker_compose_v2:
     project_name: odoo
     definition: |
       "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') }}"
-    project_dir: /opt/odoo # <-- Используйте project_dir вместо args.chdir
+    project_src: /opt/odoo # <-- Используйте project_dir вместо args.chdir
     state: present
     # removed_orphans: yes # <-- Очень полезная опция
     # build: no # Если не собираете образ локально
