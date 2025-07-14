@@ -17,8 +17,8 @@ services:
     container_name: odoo_app
     depends_on:
       - db
-    # ports:
-    #   - "{{ odoo_port }}:8069"
+#   ports:
+#     - "{{ odoo_port }}:8069"
     labels:
       - "traefik.enable=true" # Включаем обнаружение Traefik для этого сервиса
       # Правило маршрутизации: трафик на odoo.вашдомен.com будет идти к Odoo
