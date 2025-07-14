@@ -14,7 +14,8 @@
 - name: Deploy Odoo containers (Simplified)
   community.docker.docker_compose_v2:
     project_name: odoo
-    definition: "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') }}"
+    definition: |
+      "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') }}"
     project_dir: /opt/odoo # <-- Используйте project_dir вместо args.chdir
     state: present
     # removed_orphans: yes # <-- Очень полезная опция
