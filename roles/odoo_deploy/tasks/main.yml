@@ -21,7 +21,7 @@
     project_name: odoo
     definition: |
       "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') }}"
-    project_src: /opt/odoo # <-- Используйте project_dir вместо args.chdir
+    # project_src: /opt/odoo # <-- Используйте project_dir вместо args.chdir
     state: present
     # removed_orphans: yes # <-- Очень полезная опция
     # build: no # Если не собираете образ локально
