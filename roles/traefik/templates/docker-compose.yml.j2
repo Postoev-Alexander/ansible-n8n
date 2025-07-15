@@ -1,40 +1,40 @@
 services:
   traefik:
-    image: "traefik:latest"
+    image: "traefik:latest" # Или конкретная версия, например, traefik:2.10
     container_name: traefik
     restart: always
     command:
-{% set cmds = [
-  '--api=true',
-  '--api.dashboard=true',
-  '--providers.docker=true',
-  '--providers.docker.exposedbydefault=false',
-  '--providers.docker.network=' ~ traefik_docker_network_name,
-  '--entrypoints.web.address=:80',
-  '--entrypoints.websecure.address=:443',
-  '--entrypoints.web.http.redirections.entrypoint.to=websecure',
-  '--entrypoints.web.http.redirections.entrypoint.scheme=https',
-  '--certificatesresolvers.mytlschallenge.acme.tlschallenge=true',
-  '--certificatesresolvers.mytlschallenge.acme.email=' ~ traefik_ssl_email,
-  '--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json'
-] %}
-{% if traefik_api_insecure %}
-{%   set _ = cmds.append('--api.insecure=true') %}
-{% else %}
-{%   set _ = cmds.append('--api.insecure=false') %}
-{% endif %}
-{% if traefik_enable_dashboard_access %}
-{%   set _ = cmds.append('--entrypoints.traefik_api.address=:' ~ traefik_dashboard_port) %}
-{% endif %}
-{% for cmd in cmds %}
-      - "{{ cmd }}"
-{% endfor %}
+      # API & Dashboard
+      - "--api=true"
+      - "--api.dashboard=true"
+      - "--api.insecure={{ 'true' if traefik_api_insecure else 'false' }}" # Контролируется переменной
+      # Providers
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network={{ traefik_docker_network_name }}" # Указываем сеть для обнаружения
+      # Entrypoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      {% if traefik_enable_dashboard_access %}
+      - "--entrypoints.traefik_api.address=:{{ traefik_dashboard_port }}"
+      {% endif %}
+      # HTTP to HTTPS Redirection
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      # Certificates Resolvers (Let's Encrypt)
+      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
+      - "--certificatesresolvers.mytlschallenge.acme.email={{ traefik_ssl_email }}"
+      - "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json"
+      # Global access logs (optional)
+      #- "--accesslog=true"
+      # Global log level (optional)
+      #- "--log.level=INFO"
     ports:
       - "80:80"
       - "443:443"
-{% if traefik_enable_dashboard_access %}
+      {% if traefik_enable_dashboard_access %}
       - "{{ traefik_dashboard_port }}:{{ traefik_dashboard_port_in }}"
-{% endif %}
+      {% endif %}
     volumes:
       - "{{ traefik_volume_name }}:/letsencrypt"
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -43,8 +43,8 @@ services:
 
 networks:
   {{ traefik_docker_network_name }}:
-    external: true
+    external: true # Используем уже созданную внешнюю сеть
 
 volumes:
   {{ traefik_volume_name }}:
-    external: true
+    external: true # Используем уже созданный внешний том
