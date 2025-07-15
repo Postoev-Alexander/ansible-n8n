@@ -17,6 +17,8 @@ services:
     container_name: odoo_app
     depends_on:
       - db
+    ports:
+      - "{{ odoo_port }}:8069"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.odoo.rule=Host(`{{ odoo_subdomain }}.{{ main_domain }}`)"
