@@ -1,0 +1,5 @@
+# inventory/production/group_vars/traefik_vault.yml (зашифрованный)
+---
+# ... другие секреты
+n8n_db_password: "ВАШ_СЕКРЕТНЫЙ_ПАРОЛЬ_БД_N8N"
+n8n_basic_auth_password: "ВАШ_СЕКРЕТНЫЙ_ПАРОЛЬ_BASIC_AUTH_N8N"

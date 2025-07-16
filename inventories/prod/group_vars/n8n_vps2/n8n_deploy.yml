@@ -1,0 +1,14 @@
+---
+n8n_version: "latest" # Или конкретная версия, например "1.37.0"
+n8n_subdomain: "n8n"  # Поддомен для n8n, например, n8n.post-ai.tw1.su
+
+# Эти переменные должны быть определены в group_vars/traefik_config.yml или all.yml
+# main_domain: "post-ai.tw1.su"
+# traefik_docker_network_name: "traefik_proxy_network"
+
+# Если используете PostgreSQL для n8n:
+# n8n_db_password: "YOUR_N8N_DB_PASSWORD" # Секрет, должен быть в Vault!
+
+# Если используете Basic Auth для n8n:
+# n8n_basic_auth_user: "admin"
+# n8n_basic_auth_password: "YOUR_N8N_BASIC_AUTH_PASSWORD" # Секрет, должен быть в Vault!
