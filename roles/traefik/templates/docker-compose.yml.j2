@@ -21,12 +21,14 @@ services:
 ] %}
 
 {% if traefik_api_insecure %}
+  # --api.insecure=true открывает Dashboard без авторизации
 {%   set _ = cmds.append('--api.insecure=true') %}
 {% else %}
 {%   set _ = cmds.append('--api.insecure=false') %}
 {% endif %}
 
 {% if traefik_enable_dashboard_access %}
+  # Если включён доступ к Dashboard, добавляем отдельный entrypoint на определённый порт
 {%   set _ = cmds.append('--entrypoints.traefik_api.address=:{{ traefik_dashboard_port }}') %}
 {% endif %}
 
@@ -37,6 +39,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
 {% if traefik_enable_dashboard_access %}
       - "{{ traefik_dashboard_port }}:{{ traefik_dashboard_port_in }}"
 {% endif %}
