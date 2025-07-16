@@ -28,8 +28,7 @@ services:
 {% endif %}
 
 {% if traefik_enable_dashboard_access %}
-  # Если включён доступ к Dashboard, добавляем отдельный entrypoint на определённый порт
-{%   set _ = cmds.append('--entrypoints.traefik_api.address=:{{ traefik_dashboard_port }}') %}
+{%   set _ = cmds.append('--entrypoints.traefik_api.address=:' ~ traefik_dashboard_port) %}
 {% endif %}
 
 {% for cmd in cmds %}
