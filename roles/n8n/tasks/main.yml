@@ -1,0 +1,22 @@
+---
+- name: Create N8N project directory
+  ansible.builtin.file:
+    path: /opt/n8n
+    state: directory
+    mode: '0755'
+
+- name: Deploy n8n containers
+  community.docker.docker_compose_v2:
+    project_name: n8n
+    definition: "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') | from_yaml }}"
+    state: present
+    # rebuild: yes # Раскомментируйте, если нужно пересобрать образ
+    # removed_orphans: yes # Полезно для удаления старых/неиспользуемых контейнеров
+  tags:
+    - n8n
+
+- name: Debug N8N deployment result
+  ansible.builtin.debug:
+    msg: "N8N deployment task finished. Check 'docker ps' and logs for n8n_app on {{ inventory_hostname }}."
+  tags:
+    - n8n

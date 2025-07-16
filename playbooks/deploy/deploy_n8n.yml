@@ -1,0 +1,9 @@
+---
+- name: Deploy N8N service via Traefik
+  hosts: traefik_vps # Убедитесь, что эта группа соответствует вашему hosts.ini
+  become: yes
+  roles:
+    - n8n
+  tags:
+    - n8n
+    - deploy
