@@ -3,8 +3,8 @@ services:
     image: n8nio/n8n:{{ n8n_version }} # Используем официальный образ n8n
     container_name: n8n
     restart: always
-    ports:
-          - "127.0.0.1:5678:5678"
+    #ports:
+    #      - "127.0.0.1:5678:5678"
     labels:
       - "traefik.enable=true"
       # Правило маршрутизации: трафик на n8n.вашдомен.com будет идти к n8n
