@@ -50,6 +50,7 @@ services:
 volumes:
   db_data:
   odoo_data:
+    name: odoo_data 
 
 networks:
   {{ traefik_docker_network_name }}:
