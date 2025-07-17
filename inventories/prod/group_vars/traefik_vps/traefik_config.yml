@@ -1,7 +1,7 @@
 # inventory/prod/group_vars/traefik_config.yml
 ---
 # Общие настройки доменов
-main_domain: "post-ai.tw1.su"#"winzardy.com" # Ваш основной домен
+main_domain: "winzardy.com" #"post-ai.tw1.su"#"winzardy.com" # Ваш основной домен
 
 # Настройки Traefik
 traefik_api_insecure: true # В production отключаем insecure API

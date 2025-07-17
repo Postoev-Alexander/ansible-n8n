@@ -1,6 +1,6 @@
 ---
 n8n_version: "latest" # Или конкретная версия, например "1.37.0"
-n8n_subdomain: "n8n"  # Поддомен для n8n, например, n8n.post-ai.tw1.su
+n8n_subdomain: "n8n2"  # Поддомен для n8n, например, n8n.post-ai.tw1.su
 
 # Эти переменные должны быть определены в group_vars/traefik_config.yml или all.yml
 # main_domain: "post-ai.tw1.su"
