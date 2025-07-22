@@ -1,5 +1,6 @@
 ---
 traefik_volume_name: "traefik_data"
+traefik_ssl_email: "services.n8n@winzardy.com"
 #traefik_docker_network_name: "traefik_proxy_network" # Должен совпадать с docker ролью
 #traefik_api_insecure: true # Включает insecure API (для dev/staging). В prod лучше false и настроить basic auth.
 #traefik_enable_dashboard_access: true # Если true, откроет порт для дашборда
