@@ -6,4 +6,4 @@ traefik_volume_name: "traefik_data"
 #traefik_dashboard_port: 8080 # Порт для дашборда Traefik
 
 # !!! Эти переменные должны быть переопределены в group_vars или vault
-# traefik_ssl_email: "your-email@example.com" 
+# traefik_ssl_email: "services.n8n@winzardy.com" 
