@@ -6,5 +6,5 @@ main_domain: "winzardy.com" #"post-ai.tw1.su"#"winzardy.com" # Ваш основ
 # Настройки Traefik
 traefik_api_insecure: true # В production отключаем insecure API
 traefik_enable_dashboard_access: true # Если вы хотите доступ к дашборду
-traefik_dashboard_port: 8082 # Порт для дашборда Traefik
+traefik_dashboard_port: 8083 # Порт для дашборда Traefik
 traefik_dashboard_port_in: 8080
