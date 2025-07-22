@@ -3,7 +3,8 @@ services:
     image: "traefik:latest"
     container_name: traefik
     restart: always
-
+    
+    
     command:
 {% set cmds = [
   '--api=true',
