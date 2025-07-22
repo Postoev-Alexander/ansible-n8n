@@ -4,8 +4,8 @@
 main_domain: "winzardy.com" #"winzardy.com" # Ваш основной домен
 
 # Настройки Traefik
-#traefik_ssl_email2: "services.n8n@winzardy.com"
+#traefik_ssl_email: "services.n8n@winzardy.com"
 traefik_api_insecure: true # В production отключаем insecure API
 traefik_enable_dashboard_access: true # Если вы хотите доступ к дашборду
-traefik_dashboard_port: 8086 # Порт для дашборда Traefik
+traefik_dashboard_port: 8082 # Порт для дашборда Traefik
 traefik_dashboard_port_in: 8080
