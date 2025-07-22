@@ -1,9 +1,9 @@
 ---
-n8n_version: "latest" # Или конкретная версия, например "1.37.0"
-n8n_subdomain: "n8nt"  # Поддомен для n8n, например, n8n.post-ai.tw1.su
+n8n_version: "1.102.4" # Или конкретная версия, например "1.37.0"
+n8n_subdomain: "n8n"  # Поддомен для n8n, например, n8n.winzardy.com
 
 # Эти переменные должны быть определены в group_vars/traefik_config.yml или all.yml
-# main_domain: "post-ai.tw1.su"
+# main_domain: "n8n.winzardy.com"
 # traefik_docker_network_name: "traefik_proxy_network"
 
 # Если используете PostgreSQL для n8n:

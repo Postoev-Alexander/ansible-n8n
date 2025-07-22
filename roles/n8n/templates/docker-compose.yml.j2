@@ -7,7 +7,7 @@ services:
     #      - "127.0.0.1:5678:5678"
     labels:
       - "traefik.enable=true"
-      # Правило маршрутизации: трафик на n8n.вашдомен.com будет идти к n8n
+      # Правило маршрутизации: трафик на n8n.winzardy.com будет идти к n8n
       - "traefik.http.routers.n8n.rule=Host(`{{ n8n_subdomain }}.{{ main_domain }}`)"
       - "traefik.http.routers.n8n.entrypoints=web,websecure"
       - "traefik.http.routers.n8n.tls=true"
@@ -30,7 +30,7 @@ services:
       - N8N_PROTOCOL=https
       - WEBHOOK_URL=https://{{ n8n_subdomain }}.{{ main_domain }}/ # Обязательно для правильной работы вебхуков
       - NODE_ENV=production # Режим продакшена
-      - GENERIC_TIMEZONE={{ generic_timezone | default('Europe/Berlin') }} # Пример, если используете
+      - GENERIC_TIMEZONE=Europe/Moscow
 
     volumes:
       - n8n_data:/home/node/.n8n # Для персистентности данных n8n

@@ -1,9 +1,9 @@
 ---
-- name: Create N8N project directory
-  ansible.builtin.file:
-    path: /opt/n8n
-    state: directory
-    mode: '0755'
+#- name: Create N8N project directory
+#  ansible.builtin.file:
+#    path: /opt/n8n
+#    state: directory
+#    mode: '0755'
 
 - name: Deploy n8n containers
   community.docker.docker_compose_v2:
