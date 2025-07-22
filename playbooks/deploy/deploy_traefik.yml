@@ -1,6 +1,6 @@
 ---
 - name: Deploy or update Traefik proxy
-  hosts: n8n_vps # Или конкретная группа, где должен стоять Traefik
+  hosts: traefik_vps # Или конкретная группа, где должен стоять Traefik
   become: yes
   roles:
     - traefik
