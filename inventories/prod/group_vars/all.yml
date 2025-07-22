@@ -10,3 +10,4 @@ services:
     port: 8443
     
 traefik_docker_network_name: "traefik_proxy_network"
+traefik_email_name: "services.n8n@winzardy.com"

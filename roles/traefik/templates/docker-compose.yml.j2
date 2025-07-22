@@ -17,7 +17,7 @@ services:
   '--entrypoints.web.http.redirections.entrypoint.to=websecure',
   '--entrypoints.web.http.redirections.entrypoint.scheme=https',
   '--certificatesresolvers.mytlschallenge.acme.tlschallenge=true',
-  "--certificatesresolvers.mytlschallenge.acme.email={{ traefik_ssl_email2 }}",
+  '--certificatesresolvers.mytlschallenge.acme.email={{ traefik_email_name }}',
   '--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json'
 ] %}
 
