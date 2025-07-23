@@ -3,7 +3,10 @@
   package:
     name: rclone
     state: present
+    update_cache: yes
   become: yes
+  environment:
+    DEBIAN_FRONTEND: noninteractive
 
 - name: Создать директорию для конфигурации rclone
   file:
