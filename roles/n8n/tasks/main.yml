@@ -1,5 +1,5 @@
 ---
-#- name: Create N8N project directory
+#- name: Create N8N project directory 
 #  ansible.builtin.file:
 #    path: /opt/n8n
 #    state: directory
