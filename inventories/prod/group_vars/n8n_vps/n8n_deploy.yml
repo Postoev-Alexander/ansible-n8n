@@ -2,7 +2,7 @@
 n8n_version: "1.103.1" # Или конкретная версия, например "1.102.4""
 n8n_subdomain: "n8n"  # Поддомен для n8n, например, n8n.winzardy.com
 
-# можно добавить другие переменные
+# можно добавить другие переменные .
 
 # Эти переменные должны быть определены в group_vars/traefik_config.yml или all.yml
 # main_domain: "n8n.winzardy.com"
