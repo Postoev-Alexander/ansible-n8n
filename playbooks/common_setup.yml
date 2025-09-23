@@ -1,6 +1,6 @@
 ---
 - name: Common server setup, Docker installation and Traefik deployment
-  hosts: odoo_vps #all_docker_hosts
+  hosts: odoo_vps, traefik_vps #all_docker_hosts
   become: yes
   roles:
     - docker_compose          # Сначала устанавливаем Docker Engine
