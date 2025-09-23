@@ -44,6 +44,7 @@ services:
       - DB_PORT=5432
       - DB_USER={{ odoo_db_user }}
       - DB_PASSWORD={{ odoo_db_password }}
+      - ODOO_PROXY_MODE=True
     volumes:
       - odoo_data:/var/lib/odoo
     restart: always
