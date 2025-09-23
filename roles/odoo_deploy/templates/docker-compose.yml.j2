@@ -36,6 +36,9 @@ services:
       - "traefik.http.middlewares.odoo-headers.headers.STSIncludeSubdomains=true"
       - "traefik.http.middlewares.odoo-headers.headers.STSPreload=true"
       - "traefik.http.routers.odoo.middlewares=odoo-headers@docker"
+      
+      - "traefik.http.middlewares.odoo-nobuffer.buffering.maxResponseBodyBytes=0"
+      - "traefik.http.routers.odoo.middlewares=odoo-headers@docker,odoo-nobuffer@docker"
     environment:
       - DB_HOST=db
       - DB_PORT=5432
