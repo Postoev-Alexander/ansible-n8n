@@ -1,6 +1,6 @@
 # Ваши переменные (например, в inventory/production/group_vars/odoo.yml)
 ---
-odoo_version: "17.0"
+odoo_version: "18.0"
 # odoo_port: 8069 # Этот порт больше не нужен для внешнего доступа через Traefik
 odoo_db_user: "odoo"
 odoo_db_password: "odoo"
