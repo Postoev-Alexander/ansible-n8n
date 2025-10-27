@@ -1,0 +1,6 @@
+---
+- hosts: "odoo_vps"
+  become: true
+  roles:
+    #- docker_compose
+    - odoo_deploy

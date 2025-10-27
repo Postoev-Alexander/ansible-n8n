@@ -1,0 +1,11 @@
+#######################
+# n8n Update PLAYBOOK #
+#######################
+---
+- hosts: "n8n_vps"
+  become: yes
+  roles:
+    - docker_compose
+    - n8n_update
+ 
+      

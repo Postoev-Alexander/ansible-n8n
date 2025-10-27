@@ -1,0 +1,12 @@
+# Ваши переменные (например, в inventory/production/group_vars/odoo.yml)
+---
+odoo_version: "17.0"
+# odoo_port: 8069 # Этот порт больше не нужен для внешнего доступа через Traefik
+odoo_db_user: "odoo"
+odoo_db_password: "odoo"
+odoo_db_name: "postgres"
+
+# --- Новые переменные для Traefik ---
+odoo_subdomain: "odoo" # Поддомен для Odoo, например, odoo.yourdomain.com
+# main_domain будет браться из inventory/<environment_name>/group_vars/traefik_config.yml
+# traefik_docker_network_name будет браться из roles/docker_network/defaults/main.yml (или group_vars)
