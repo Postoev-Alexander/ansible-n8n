@@ -1,0 +1,21 @@
+---
+- name: Ensure Traefik data volume exists
+  community.docker.docker_volume:
+    name: "{{ traefik_volume_name }}"
+    state: present
+  tags:
+    - traefik
+
+- name: Deploy Traefik Docker Compose stack
+  community.docker.docker_compose_v2:
+    project_name: traefik
+    definition: "{{ lookup('template', 'docker-compose.yml.j2') | from_yaml }}"
+    state: present
+  tags:
+    - traefik
+
+- name: Debug Traefik deployment result
+  ansible.builtin.debug:
+    msg: "Traefik deployed successfully. Check 'docker ps' on {{ inventory_hostname }}."
+  tags:
+    - traefik

@@ -1,0 +1,8 @@
+---
+# Файл обработчиков для роли node_exporter
+- name: Перезапустить сервис Node Exporter
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: restarted
+    daemon_reload: yes
+  become: yes

@@ -1,0 +1,22 @@
+---
+- name: Проверка — установлен ли уже Outline
+  stat:
+    path: "{{ outline_data_file }}"
+  register: outline_installed
+
+- name: Скачивание установочного скрипта Outline
+  get_url:
+    url: "{{ outline_install_script_url }}"
+    dest: "{{ outline_install_script_path }}"
+    mode: '0755'
+  when: not outline_installed.stat.exists
+
+- name: Запуск установочного скрипта Outline
+  command: "{{ outline_install_script_path }}"
+  register: outline_install_output
+  when: not outline_installed.stat.exists
+
+- name: Отладка вывода установки Outline
+  debug:
+    var: outline_install_output.stdout_lines
+  when: not outline_installed.stat.exists

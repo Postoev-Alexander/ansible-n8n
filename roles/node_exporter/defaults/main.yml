@@ -1,0 +1,8 @@
+# Файл значений по умолчанию для роли node_exporter
+node_exporter_version: "latest" # Или конкретная версия, например "1.8.1"
+node_exporter_download_url_base: "https://github.com/prometheus/node_exporter/releases/download"
+node_exporter_user: "node_exporter"
+node_exporter_install_dir: "/usr/local/bin"
+node_exporter_port: 9100 # Стандартный порт Node Exporter
+node_exporter_listen_address: ":9100" # Адрес, на котором Node Exporter будет слушать
+node_exporter_extra_args: "" # Дополнительные аргументы для Node Exporter, например: "--collector.diskstats.ignored-devices='^(dm-|loop|md|sd[a-z][0-9]|sr[0-9]|nbd[0-9]|ram[0-9])'$"

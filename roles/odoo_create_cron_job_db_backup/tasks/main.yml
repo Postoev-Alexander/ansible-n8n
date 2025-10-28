@@ -1,0 +1,16 @@
+---
+- name: Ensure backup directory exists
+  file:
+    path: "{{ backup_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Add cronjob for daily Postgres backup
+  cron:
+    name: "Daily Postgres Backup"
+    minute: "{{ backup_minute }}"
+    hour: "{{ backup_hour }}"
+    user: root
+    job: "docker exec {{ postgres_container }} pg_dump -U {{ postgres_user }} {{ postgres_db }} > {{ backup_path }}/odoo_backup_$(date +\\%Y-\\%m-\\%d).sql"

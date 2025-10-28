@@ -1,0 +1,8 @@
+---
+- name: Common server setup, Docker installation and Traefik deployment
+  hosts: odoo_vps, traefik_vps #all_docker_hosts
+  become: yes
+  roles:
+    - docker_compose          # Сначала устанавливаем Docker Engine
+    - docker_network_create_traefik   # Затем создаём общую сеть Docker
+    - traefik                # После этого деплоим Traefik
