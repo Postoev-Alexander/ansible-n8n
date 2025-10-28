@@ -1,0 +1,9 @@
+---
+- name: Deploy docker compose
+  hosts: n8n_vps # Убедитесь, что эта группа соответствует вашему hosts.ini
+  become: yes
+  roles:
+    - docker_compose
+    - docker_network_create_traefik
+  tags:
+    - deploy

@@ -1,0 +1,22 @@
+---
+- name: Create Odoo project directory
+  ansible.builtin.file:
+    path: /opt/odoo
+    state: directory
+    mode: '0755'
+    
+- name: Deploy Odoo containers
+  community.docker.docker_compose_v2:
+    project_name: odoo
+    definition: "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') | from_yaml }}"
+    state: present
+
+#- name: Copy docker-compose.yml
+#  ansible.builtin.template:
+#    src: docker-compose.yml.j2 
+#    dest: /opt/odoo/docker-compose.yml
+
+#- name: Start Odoo containers
+#  command: docker compose up -d
+#  args:
+#    chdir: /opt/odoo

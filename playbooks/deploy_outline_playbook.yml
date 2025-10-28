@@ -1,0 +1,17 @@
+---
+- hosts: outline_vpn
+  become: yes
+  roles:
+    - docker_compose
+    - outline_install
+    #- outline_backup_restore
+    #- docker_restart
+  #tasks:
+  #  - name: Restart Docker containers
+  #    docker_container:
+  #      name: "{{ item }}"
+  #      state: started
+  #      restart: true
+  #    loop:
+  #      - shadowbox
+ 

@@ -1,0 +1,57 @@
+services:
+  db:
+    image: postgres:15
+    container_name: odoo_db
+    environment:
+      POSTGRES_DB: {{ odoo_db_name }}
+      POSTGRES_USER: {{ odoo_db_user }}
+      POSTGRES_PASSWORD: {{ odoo_db_password }}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - {{ traefik_docker_network_name }}
+
+  odoo:
+    image: odoo:{{ odoo_version }}
+    container_name: odoo_app
+    depends_on:
+      - db
+# убираем прямой доступ, оставляем через traefik 
+#    ports:
+#      - "{{ odoo_port }}:8069"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.odoo.rule=Host(`{{ odoo_subdomain }}.{{ main_domain }}`)"
+      - "traefik.http.routers.odoo.entrypoints=web,websecure"
+      - "traefik.http.routers.odoo.tls=true"
+      - "traefik.http.routers.odoo.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.odoo.loadbalancer.server.port=8069"
+      - "traefik.http.middlewares.odoo-headers.headers.SSLRedirect=true"
+      - "traefik.http.middlewares.odoo-headers.headers.STSSeconds=315360000"
+      - "traefik.http.middlewares.odoo-headers.headers.browserXSSFilter=true"
+      - "traefik.http.middlewares.odoo-headers.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.odoo-headers.headers.forceSTSHeader=true"
+      - "traefik.http.middlewares.odoo-headers.headers.SSLHost={{ main_domain }}"
+      - "traefik.http.middlewares.odoo-headers.headers.STSIncludeSubdomains=true"
+      - "traefik.http.middlewares.odoo-headers.headers.STSPreload=true"
+      - "traefik.http.routers.odoo.middlewares=odoo-headers@docker"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER={{ odoo_db_user }}
+      - DB_PASSWORD={{ odoo_db_password }}
+    volumes:
+      - odoo_data:/var/lib/odoo
+    restart: always
+    networks:
+      - {{ traefik_docker_network_name }}
+
+volumes:
+  db_data:
+  odoo_data:
+    name: odoo_data 
+
+networks:
+  {{ traefik_docker_network_name }}:
+    external: true 

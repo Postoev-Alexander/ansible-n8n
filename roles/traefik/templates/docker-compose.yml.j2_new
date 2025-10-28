@@ -1,0 +1,44 @@
+# roles/traefik/templates/docker-compose.yml.j2
+version: '3.8'
+
+services:
+  traefik:
+    image: "traefik:latest" # Или конкретная версия, например, traefik:2.10
+    container_name: traefik
+    restart: always
+    command:
+      - "--api=true"
+      - "--api.dashboard=true"
+      - "--api.insecure={{ traefik_api_insecure }}"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network={{ traefik_docker_network_name }}"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+{% if traefik_enable_dashboard_access %}
+      - "--entrypoints.traefik_api.address=:{{ traefik_dashboard_port }}"
+{% endif %}
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
+      - "--certificatesresolvers.mytlschallenge.acme.email={{ traefik_ssl_email }}"
+      - "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+{% if traefik_enable_dashboard_access %}
+      - "{{ traefik_dashboard_port }}:{{ traefik_dashboard_port }}"
+{% endif %}
+    volumes:
+      - "{{ traefik_volume_name }}:/letsencrypt"
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - {{ traefik_docker_network_name }}
+
+networks:
+  {{ traefik_docker_network_name }}:
+    external: true # Используем уже созданную внешнюю сеть
+
+volumes:
+  {{ traefik_volume_name }}:
+    external: true # Используем уже созданный внешний том

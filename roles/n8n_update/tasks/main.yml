@@ -1,0 +1,6 @@
+---
+- name: Pull latest n8n image
+  community.docker.docker_image:
+    name: n8nio/n8n
+    tag: latest
+    source: pull
